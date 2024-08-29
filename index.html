@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+<!-- ページのヘッダーを設置 -->
+<div id="header">
+<img src="../img/header.png" alt="">
+</div>
+
+    <!-- 質問欄設置 -->
+<div id="qimgtext">
+    <img src="../img/qimg.png">
+    <p id="qtext">
+        痩せてキレイになりたいんでしょ？という反応にモヤモヤします。<br>
+        もちろんそれもあるけど、ただキレイになりたいという気持ちだけじゃない気がするから、<br>
+        なんて説明したら良いのかなといつも迷ってしまいます…
+    </p>
+</div>
+
+<!-- 回答欄設置 -->
+<div id="aimgtext">
+    <img src="../img/aimg.png">
+    <p id="atext">
+        ピアサポーターののんです。そうですね。ただそれだけの気持ちではない感じだけれれど、理解して欲しい。<br>
+        でもどう説明すれば、上手く伝わるか考えてということでしょうか。<br>
+        どんな気持ちを理解してもらえると嬉しかったり、安心できたりするでしょうか。<br>
+        例えば、私だと、痩せてキレイになりたいという気持ちだけではなく、存在を認めてほしいという思いも一つありました。<br>
+        ですので、場面にもよるかと思いますが、「うまく説明できないけれど、取り組んでいることで、<br>
+        自分のことを見てほしい、認めてほしいって思ってるのかなあ。」と説明するかもしれません。
+    </p>
+</div>
+
+<!-- あなたの感想教えてね欄設置 -->
+<div id="kansou">
+<img src="../img/character.png" alt="" class="img1">
+<img src="../img/serifu.png" alt="" class="img2">
+</div>
+
+<!-- チャット機能で、名前・テキストボックス・送信ボタンで下に表示していく -->
+<div>あなたの名前 <input type="text" id="uname"></div>    
+<textarea id="text" cols="30" rows="10"></textarea>
+    <button id="send">送信</button>
+    <div id="output" style="overflow:auto; height: 300px;"></div>
+</div>
+
+<!-- チャットに打ち込まれたメッセージを下に表示していく -->
+
+<!-- Jqueryをダウンロードする -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Firebaseをダウンロードする -->
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved } 
+    from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "",
+      authDomain: "tabekowa-chan.firebaseapp.com",
+      projectId: "tabekowa-chan",
+      storageBucket: "tabekowa-chan.appspot.com",
+      messagingSenderId: "558734139905",
+      appId: "1:558734139905:web:9d84d0fb3894d7e3fa5600"
+    };
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  //   Firebaseを使用するための2行を追加する
+    const db = getDatabase(app) //データベースにアクセスする
+    const dbRef = ref(db,"chat") //どこの階層にRealTimeDataBaseから引っ張ってきたデータを格納するのかを指定
+  
+// 送信ボタンのクリックイベントを追加
+// やりたい作業＝送信ボタンをクリックしたら、FireBaseにデータを入れて、それを読み込んでOutputの部分に表示させる
+$("#send").on("click",function(){
+// Firebaseに蓄積させたいデータをmsg変数(=uname + text)として置き直す
+const msg = {
+    uname: $("#uname").val(),
+    text: $("#text").val()
+}
+// 新しくチャットが書き込まれた際にdbRefにそのチャットをユニークキー付きで代入する
+// ＝データベースにデータをただ蓄積する作業！
+const newmsg = push(dbRef) //ユニークキーをつける(ものを入れる箱を作る)
+set(newmsg, msg)  //msg変数をnewmsgという変数(=ユニークキー付きの)に代入する(箱に実際にデータを入れていく)
+
+// データベースに蓄積されたものを実際に表示させる
+onChildAdded(dbRef,function(data){ //データを格納してある場所＝dbRef, function(data)は固定
+// dbRefにデータが入ってきたら、下記の関数を実行する
+const msg = data.val();
+// 引数.keyはユニークキーを生成する関数
+const key = data.key
+// unameやtextに入力されたものを変数に代入したので、それを組み合わせて改行ありの文章として表示させる
+let h = "<p>"
+    h += msg.uname;
+    h += "<br>";
+    h += msg.text;
+    h += "</p>";
+// 入れたいエリアの一番最後に表示させる
+$("#output").append(h);
+});
+
+
+
+})
+  </script>
+
+
+
+
+</body>
+</html>
+
+
+<!-- 勉強したことメモ -->
+<!-- constで最初に定義した定数と同じ定数をもう一回後々に
+変数(定数)には、ローカル変数とグローバル変数という2種類がある。ローカル＝各関数の中での定義、グローバル＝body全体で一貫した変数・定数
+https://qiita.com/hir1524/items/a270b00c420ed96f02f0 -->
+

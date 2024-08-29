@@ -1,0 +1,79 @@
+#header {
+    text-align: center; /* 子要素（この場合は画像）を中央に配置 */
+}
+
+#header img {
+    max-width: 500px; /* 画像の最大幅を指定 */
+    height: auto; /* 画像の高さを自動調整 */
+    display: block; /* 画像をブロック要素に変更し、親要素内で中央揃え */
+    margin: 0 auto; /* 左右のマージンを自動に設定して中央揃え */
+}
+
+#qimgtext {
+    display: flex; /* 横並び */
+    align-items: center; /* 画像とテキストの上下を中央揃え */
+    gap: 10px; /* 画像とテキストの間に間隔を追加 */
+    padding: 20px; /* 余白を追加*/
+    border-radius: 10px; /* 角を丸める*/
+}
+
+#qimgtext img {
+    max-width: 100px; /* 画像の最大幅を指定*/
+    height: auto; /* 画像の高さを自動調整 */
+}
+
+#qtext {
+    font-size: 16px; /* フォントサイズを調整*/
+    line-height: 1.5; /* 行間を調整 */
+}
+
+#aimgtext {
+    display: flex; /* 横並び */
+    align-items: center; /* 画像とテキストの上下を中央揃え */
+    gap: 10px; /* 画像とテキストの間に間隔を追加 */
+    padding: 20px; /* 余白を追加*/
+    border-radius: 10px; /* 角を丸める*/
+}
+
+#aimgtext img {
+    max-width: 100px; /* 画像の最大幅を指定*/
+    height: auto; /* 画像の高さを自動調整 */
+}
+
+#atext {
+    font-size: 16px; /* フォントサイズを調整*/
+    line-height: 1.5; /* 行間を調整 */
+}
+
+#kansou {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#kansou .img1{
+    max-width: 200px; /* 画像の最大幅を指定*/
+    height: auto; /* 画像の高さを自動調整 */
+}
+
+#kansou .img2{
+    max-width: 400px; /* 画像の最大幅を指定*/
+    height: auto; /* 画像の高さを自動調整 */
+   
+}
+
+#uname, #text {
+    width: 100%; /* 横幅を画面いっぱいに広げる */
+    box-sizing: border-box; /* パディングやボーダーを含めて幅を計算する */
+    margin-bottom: 10px; /* テキストボックス間にスペースを設ける*/
+}
+
+#send {
+    background-color: #ffd581; /* ボタンの背景色を赤に設定 */
+    color: black; /* ボタンの文字色を白に設定 */
+    font-size: 20px; /* フォントサイズを大きく設定 */
+    padding: 10px 20px; /* ボタン内のテキストに余白を追加 */
+    border: none; /* デフォルトの境界線を削除 */
+    border-radius: 15px; /* 角を丸くする */
+    cursor: pointer; /* ホバー時にカーソルをポインターに */
+}
